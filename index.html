@@ -1,0 +1,997 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Microbe Survival Tray</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: lab bench. The culture tray scene sits on the left; a specimen card with the condition, required outcome and mutation choices sits on the right. Stacks to one column on phones. */
+:root{
+  --font-display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --font-mono:"IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --bg:#eaeee8; --panel:#fbfcf9; --soft:#f2f5f0; --ink:#1c2420; --muted:#56625b; --line:#cdd5cd;
+  --accent:#5b2c86; --accent-ink:#ffffff; --accent-soft:#efe7f6;
+  --good:#23794a; --warn:#94640c; --bad:#b0352a; --on-sem:#ffffff;
+  --good-soft:#e3f2e8; --warn-soft:#f7eedb; --bad-soft:#f8e4e1;
+  --tape:#efe3bf; --tape-ink:#4a3f22;
+
+  --bench:#dfe5dd; --rim:#c3cdca; --rim-edge:#8d9b98; --water:#d3ebe7; --water-deep:#a8d1cb;
+  --cell:#c84f78; --cell-edge:#7d2445; --cell-dot:#ffe9f0; --dead:#9aa39e; --tick:#3b1f55; --halo:#9fc3ff;
+  --pig-red:#b8322a; --pig-orange:#e0791d; --pig-yellow:#d3ac14; --pig-green:#3b8a3a; --pig-purple:#6a3c9f;
+  --heat:#e5602a; --ice:#ffffff; --cold:#5aa2dc; --uv:#f2c014; --acid:#a6b81a; --salt:#ffffff; --salt-edge:#93a3a6;
+  --dim:#16222a; --mold:#6c8a4a; --mold-halo:#f6f0c8; --food:#c98a1c; --fresh:#ffffff; --phage:#2f3555;
+  --amoeba:#8aa874; --amoeba-edge:#4d6a3a; --dry:#cdb88f; --crack:#7b6644;
+  --scrim:rgba(24,32,28,.55);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111614; --panel:#192019; --soft:#1f2722; --ink:#e2eae4; --muted:#9aa79f; --line:#2d3731;
+    --accent:#b993e3; --accent-ink:#170f1f; --accent-soft:#2a2135;
+    --good:#5cc489; --warn:#e2b24c; --bad:#f07466; --on-sem:#0e1411;
+    --good-soft:#18301f; --warn-soft:#33290f; --bad-soft:#3a1c19;
+    --tape:#5b5133; --tape-ink:#f3e8c6;
+    --bench:#161c19; --rim:#2c3735; --rim-edge:#4b5a57; --water:#183a37; --water-deep:#0f2a28;
+    --cell:#e27a9e; --cell-edge:#ffc2d6; --cell-dot:#4a1426; --dead:#5c6560; --tick:#e6d2ff; --halo:#6e9de6;
+    --pig-red:#e2554a; --pig-orange:#f09544; --pig-yellow:#e8c84a; --pig-green:#64b85f; --pig-purple:#a97ee0;
+    --heat:#ff7a45; --ice:#d9f0ff; --cold:#4d8fc9; --uv:#ffd84a; --acid:#c3d43b; --salt:#e9f1f2; --salt-edge:#7f9497;
+    --dim:#000000; --mold:#86a65f; --mold-halo:#6e6a3a; --food:#e3a43a; --fresh:#bfe6ff; --phage:#cfd4f2;
+    --amoeba:#7d9c68; --amoeba-edge:#b8d6a2; --dry:#5a4c33; --crack:#a88f63;
+    --scrim:rgba(0,0,0,.66);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111614; --panel:#192019; --soft:#1f2722; --ink:#e2eae4; --muted:#9aa79f; --line:#2d3731;
+  --accent:#b993e3; --accent-ink:#170f1f; --accent-soft:#2a2135;
+  --good:#5cc489; --warn:#e2b24c; --bad:#f07466; --on-sem:#0e1411;
+  --good-soft:#18301f; --warn-soft:#33290f; --bad-soft:#3a1c19;
+  --tape:#5b5133; --tape-ink:#f3e8c6;
+  --bench:#161c19; --rim:#2c3735; --rim-edge:#4b5a57; --water:#183a37; --water-deep:#0f2a28;
+  --cell:#e27a9e; --cell-edge:#ffc2d6; --cell-dot:#4a1426; --dead:#5c6560; --tick:#e6d2ff; --halo:#6e9de6;
+  --pig-red:#e2554a; --pig-orange:#f09544; --pig-yellow:#e8c84a; --pig-green:#64b85f; --pig-purple:#a97ee0;
+  --heat:#ff7a45; --ice:#d9f0ff; --cold:#4d8fc9; --uv:#ffd84a; --acid:#c3d43b; --salt:#e9f1f2; --salt-edge:#7f9497;
+  --dim:#000000; --mold:#86a65f; --mold-halo:#6e6a3a; --food:#e3a43a; --fresh:#bfe6ff; --phage:#cfd4f2;
+  --amoeba:#7d9c68; --amoeba-edge:#b8d6a2; --dry:#5a4c33; --crack:#a88f63;
+  --scrim:rgba(0,0,0,.66);
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{background:var(--bg); color:var(--ink); font-family:var(--font-body); font-size:16px; line-height:1.5}
+.wrap{max-width:1180px; margin:0 auto; padding-inline:20px; padding-block:22px 44px; display:grid; gap:18px}
+
+.top{display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:16px 32px}
+.brand{display:grid; gap:6px; min-width:0; max-width:62ch}
+.eyebrow{margin:0; font-family:var(--font-mono); font-size:12px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--accent)}
+h1{margin:0; font-family:var(--font-display); font-weight:800; font-size:clamp(1.9rem, 4vw, 2.75rem); line-height:1.02; letter-spacing:-.02em; text-wrap:balance}
+.lede{margin:0; color:var(--muted)}
+.scoreboard{display:flex; gap:12px}
+.stat{display:grid; gap:2px; padding:10px 16px; background:var(--panel); border:1px solid var(--line); border-radius:12px; min-width:104px}
+.stat .lbl{font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
+.stat .val{font-family:var(--font-display); font-weight:800; font-size:2rem; line-height:1; font-variant-numeric:tabular-nums}
+.val.pos{color:var(--good)} .val.neg{color:var(--bad)}
+
+.history{list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:6px}
+.history li{width:30px; height:30px; display:grid; place-items:center; border-radius:7px; border:1.5px solid var(--line); background:var(--panel); font-family:var(--font-mono); font-size:11px; font-weight:600; color:var(--muted); font-variant-numeric:tabular-nums}
+.history li.thrive{background:var(--good); border-color:var(--good); color:var(--on-sem)}
+.history li.maintain{background:var(--warn); border-color:var(--warn); color:var(--on-sem)}
+.history li.die{background:var(--bad); border-color:var(--bad); color:var(--on-sem)}
+.history li.current{border-color:var(--accent); color:var(--accent); box-shadow:0 0 0 2px var(--accent-soft)}
+
+.app{display:grid; grid-template-columns:minmax(0,1fr); gap:18px; align-items:start}
+
+.scene{display:grid; gap:12px; min-width:0}
+.tray-wrap{position:relative; border-radius:18px; overflow:hidden; background:var(--bench); border:1px solid var(--line)}
+canvas{display:block; width:100%; height:auto; aspect-ratio:640/440; max-width:100%}
+.tape{position:absolute; top:4.5%; left:6%; background:var(--tape); color:var(--tape-ink); font-family:var(--font-mono); font-size:12px; font-weight:600; letter-spacing:.06em; padding:4px 10px; transform:rotate(-2.5deg); box-shadow:0 1px 2px rgba(0,0,0,.18); white-space:nowrap; max-width:70%; overflow:hidden; text-overflow:ellipsis}
+.census{position:absolute; right:6%; bottom:5%; background:var(--panel); color:var(--ink); border:1px solid var(--line); border-radius:8px; padding:4px 10px; font-family:var(--font-mono); font-size:12px; font-variant-numeric:tabular-nums}
+.census b{font-weight:600}
+.stamp{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) rotate(-8deg); font-family:var(--font-display); font-weight:800; font-size:clamp(1.3rem, 4.2vw, 2.4rem); letter-spacing:.04em; text-transform:uppercase; padding:.15em .55em; border:4px solid currentColor; border-radius:10px; background:var(--panel); white-space:nowrap; pointer-events:none; animation:stamp .35s cubic-bezier(.2,1.4,.4,1) both}
+.stamp.thrive{color:var(--good)} .stamp.maintain{color:var(--warn)} .stamp.die{color:var(--bad)}
+@keyframes stamp{from{transform:translate(-50%,-50%) rotate(-8deg) scale(1.6); opacity:0} to{transform:translate(-50%,-50%) rotate(-8deg) scale(1); opacity:1}}
+
+.key{display:flex; flex-wrap:wrap; gap:8px 18px; margin:0; padding:0; list-style:none; font-size:.9rem; color:var(--muted)}
+.key li{display:flex; align-items:center; gap:8px}
+.sw{width:12px; height:12px; border-radius:3px; flex:none}
+.sw.good{background:var(--good)} .sw.warn{background:var(--warn)} .sw.bad{background:var(--bad)}
+
+.card{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:22px; display:grid; gap:14px; min-width:0}
+.card h2{margin:0; font-family:var(--font-display); font-weight:800; font-size:1.8rem; line-height:1.05; letter-spacing:-.015em; text-wrap:balance}
+.card p{margin:0}
+.head-row{display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px}
+.reading{font-family:var(--font-mono); font-size:13px; font-weight:600; padding:3px 9px; border-radius:6px; background:var(--soft); border:1px solid var(--line); font-variant-numeric:tabular-nums}
+.note{font-size:.9rem; color:var(--muted)}
+.goal{display:flex; flex-wrap:wrap; align-items:center; gap:4px 12px; padding:10px 14px; border-radius:10px; background:var(--soft); border:1.5px dashed var(--line)}
+.goal .glbl{font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); width:100%}
+.goal strong{font-family:var(--font-display); font-weight:800; font-size:1.25rem; text-transform:uppercase; letter-spacing:.03em}
+.goal.thrive strong{color:var(--good)} .goal.survive strong{color:var(--warn)}
+.choose-h{margin:4px 0 0; font-family:var(--font-mono); font-size:12px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
+
+.options{display:grid; gap:10px}
+.opt{display:grid; grid-template-columns:28px minmax(0,1fr); gap:12px; align-items:start; text-align:left; width:100%; padding:12px 14px; border:1.5px solid var(--line); border-radius:12px; background:var(--soft); color:var(--ink); font:inherit; cursor:pointer; transition:border-color .15s, transform .15s, background .15s}
+.opt:hover:not(:disabled){border-color:var(--accent); transform:translateY(-1px)}
+.opt:focus-visible, .btn:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+.opt:disabled{cursor:default}
+.opt.chosen{border-color:var(--accent); background:var(--accent-soft)}
+.opt.faded{opacity:.72}
+.letter{width:28px; height:28px; display:grid; place-items:center; border-radius:50%; border:1.5px solid var(--line); background:var(--panel); font-family:var(--font-mono); font-size:12px; font-weight:600}
+.opt.chosen .letter{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
+.opt-body{display:grid; gap:2px; min-width:0}
+.opt-body b{font-weight:700}
+.detail{font-size:.92rem; color:var(--muted)}
+.tag{justify-self:start; margin-top:4px; font-family:var(--font-mono); font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; padding:2px 8px; border-radius:999px}
+.tag.good{background:var(--good-soft); color:var(--good)}
+.tag.neutral{background:var(--warn-soft); color:var(--warn)}
+.tag.bad{background:var(--bad-soft); color:var(--bad)}
+
+.result{display:grid; gap:12px; padding-top:14px; border-top:1px solid var(--line)}
+.verdict{display:flex; align-items:center; gap:14px}
+.delta{font-family:var(--font-display); font-weight:800; font-size:2.2rem; line-height:1; font-variant-numeric:tabular-nums}
+.verdict.ok .delta{color:var(--good)} .verdict.miss .delta{color:var(--bad)}
+.verdict div{display:grid}
+.verdict strong{font-size:1.1rem}
+.verdict span{color:var(--muted); font-size:.95rem}
+.btn{justify-self:start; font:inherit; font-weight:700; padding:11px 18px; border-radius:10px; border:0; background:var(--accent); color:var(--accent-ink); cursor:pointer}
+.btn:hover{filter:brightness(1.08)}
+
+.sum-score{font-family:var(--font-display); font-weight:800; font-size:3.4rem; line-height:1; font-variant-numeric:tabular-nums}
+.sum-list{list-style:none; margin:0; padding:0; display:grid; gap:0}
+.sum-list li{display:grid; grid-template-columns:minmax(0,1fr) auto; gap:4px 12px; padding:9px 0; border-bottom:1px solid var(--line)}
+.sum-list .nm{font-weight:700}
+.sum-list .tr{grid-column:1; color:var(--muted); font-size:.9rem}
+.sum-list .pts{grid-row:1 / span 2; grid-column:2; align-self:center; font-family:var(--font-mono); font-weight:600; font-variant-numeric:tabular-nums}
+.pts.ok{color:var(--good)} .pts.miss{color:var(--bad)}
+
+.card.revealed .detail{display:none}
+
+/* Final results overlay */
+.finale{position:fixed; inset:0; z-index:50; display:grid; place-items:center; padding:max(16px, env(safe-area-inset-top, 0px)) 16px max(16px, env(safe-area-inset-bottom, 0px)); background:var(--scrim); overflow-y:auto}
+.finale-box{width:min(100%, 480px); background:var(--panel); border:1px solid var(--line); border-radius:20px; padding:28px 26px 24px; display:grid; gap:10px; justify-items:center; text-align:center; box-shadow:0 24px 60px rgba(0,0,0,.28); animation:rise .4s cubic-bezier(.2,1,.4,1) both}
+@keyframes rise{from{transform:translateY(18px); opacity:0} to{transform:none; opacity:1}}
+.finale-box p{margin:0}
+.finale-label{font-family:var(--font-display); font-weight:800; font-size:clamp(1.8rem, 6vw, 2.6rem); line-height:1; text-transform:uppercase; letter-spacing:.03em; padding:.18em .55em; border:4px solid currentColor; border-radius:12px; transform:rotate(-4deg); margin-block:10px 6px; animation:stamp2 .45s .2s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes stamp2{from{transform:rotate(-4deg) scale(1.6); opacity:0} to{transform:rotate(-4deg) scale(1); opacity:1}}
+.finale-label.thriving{color:var(--good)} .finale-label.steady{color:var(--warn)} .finale-label.unsuccessful{color:var(--bad)}
+.finale-score{font-family:var(--font-display); font-weight:800; font-size:4.2rem; line-height:1; font-variant-numeric:tabular-nums}
+.finale-score .of{font-size:.42em; color:var(--muted); margin-left:.15em}
+.finale-sub{font-family:var(--font-mono); font-size:11px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
+.pips{display:flex; flex-wrap:wrap; justify-content:center; gap:5px; margin:4px 0 2px; padding:0; list-style:none}
+.pips li{width:18px; height:18px; border-radius:5px}
+.pips li.met{background:var(--good)} .pips li.miss{background:var(--bad)}
+.finale-msg{max-width:42ch; color:var(--ink)}
+.finale-stats{display:flex; flex-wrap:wrap; justify-content:center; gap:6px 16px; margin:2px 0 0; font-size:.88rem; color:var(--muted)}
+.finale-stats b{color:var(--ink); font-variant-numeric:tabular-nums}
+.finale-time{font-family:var(--font-mono); font-size:12px; color:var(--muted)}
+.finale-actions{display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:8px}
+.finale-actions .btn{justify-self:auto}
+.btn-ghost{background:transparent; color:var(--ink); border:1.5px solid var(--line)}
+.btn-ghost:hover{border-color:var(--accent); filter:none}
+@media (max-height:700px){ .finale-box{padding:18px 20px; gap:7px} .finale-score{font-size:3.2rem} .finale-label{margin-block:6px 2px} }
+
+/* Any landscape screen 640px or wider (Chromebooks, laptops, a browser side panel): fit the whole game in one screen with no page scrolling.
+   The tray scales to the height that is left over; the card scrolls inside itself only as a last resort. */
+@media (min-width:640px) and (min-aspect-ratio:1/1){
+  html, body{height:100%; overflow:hidden}
+  .wrap{height:100%; max-width:1280px; grid-template-rows:auto minmax(0,1fr); padding-block:12px; gap:10px}
+  .top{flex-wrap:nowrap; align-items:center; gap:12px 20px}
+  .brand{flex:none; gap:2px}
+  .lede{display:none}
+  h1{font-size:clamp(1.25rem, 2.4vw, 1.9rem)}
+  .history{flex:1 1 auto; justify-content:center; min-width:0; gap:4px}
+  .history li{width:24px; height:24px; font-size:10px; border-radius:6px}
+  .scoreboard{flex:none; gap:8px}
+  .stat{padding:4px 12px; min-width:76px}
+  .stat .val{font-size:1.4rem}
+  .app{height:100%; min-height:0; grid-template-rows:minmax(0,1fr); grid-template-columns:minmax(0,1fr) clamp(300px, 40vw, 480px); gap:14px}
+  .scene{height:100%; min-height:0; display:flex; flex-direction:column; gap:8px}
+  .tray-box{flex:1 1 auto; min-height:0; container-type:size; display:grid; place-items:center}
+  .tray-wrap{width:100%; width:min(100cqw, 100cqh * 1.4545)}
+  .key{flex:none; justify-content:center; font-size:.8rem; gap:2px 14px; line-height:1.3}
+  .card{max-height:100%; overflow-y:auto; overscroll-behavior:contain; padding:16px 18px; gap:10px; font-size:15px}
+  .card h2{font-size:1.4rem}
+  .card .eyebrow{display:none}
+  .reading{font-size:12px}
+  .goal{padding:6px 12px}
+  .goal .glbl{width:auto}
+  .goal strong{font-size:1.05rem}
+  .choose-h{margin:0}
+  .options{gap:7px}
+  .opt{padding:8px 12px; gap:10px; grid-template-columns:24px minmax(0,1fr)}
+  .letter{width:24px; height:24px; font-size:11px}
+  .detail{font-size:.84rem; line-height:1.3}
+  .result{gap:8px; padding-top:10px}
+  .delta{font-size:1.8rem}
+  .btn{padding:9px 16px}
+  .sum-score{font-size:2.6rem}
+  /* After a choice: drop the setup text and shrink options to one line so the verdict and Next button fit */
+  .card.revealed .cond-text, .card.revealed .choose-h, .card.revealed .note-regrow, .card.revealed .goal{display:none}
+  .card.revealed .opt{padding-block:5px; align-items:center}
+  .card.revealed .opt-body{display:flex; flex-wrap:wrap; align-items:center; gap:2px 10px}
+  .card.revealed .tag{margin-top:0}
+}
+/* Very short landscape screens (a zoomed-in Chromebook, or browser bars taking space) */
+@media (min-width:640px) and (min-aspect-ratio:1/1) and (max-height:620px){
+  .wrap{padding-block:8px; gap:8px}
+  .brand .eyebrow{display:none}
+  .stat .lbl{font-size:10px}
+  .stat .val{font-size:1.15rem}
+  .key li:last-child{display:none}
+  .key{font-size:.74rem}
+  .card{padding:12px 14px; gap:8px; font-size:14px}
+  .card h2{font-size:1.2rem}
+  .opt{padding:6px 10px}
+  .opt-body b{font-size:.95rem}
+  .detail{font-size:.8rem}
+  .tape, .census{font-size:11px}
+  .goal .glbl{display:none}
+  .card.revealed .opt:not(.chosen):not(.best){display:none}
+}
+/* Narrow landscape windows (browser side panel, split screen) */
+@media (min-width:640px) and (max-width:900px) and (min-aspect-ratio:1/1){
+  .card{font-size:14px; padding:12px 14px}
+  .card h2{font-size:1.2rem}
+  .detail{font-size:.8rem}
+  .goal .glbl{display:none}
+  .history li{width:20px; height:20px; font-size:9px}
+}
+/* Portrait and phone screens: stacked layout */
+@media (max-width:639px), (max-aspect-ratio:999/1000){
+  .wrap{padding-inline:16px; gap:14px}
+  .card{padding:18px}
+  .tray-wrap{max-width:calc((100dvh - 200px) * 1.4545); margin-inline:auto; width:100%}
+}
+
+@media (prefers-reduced-motion: reduce){ .stamp, .finale-box, .finale-label{animation:none} .opt{transition:none} }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <p class="eyebrow">Natural selection lab</p>
+      <h1>Microbe Survival Tray</h1>
+      <p class="lede">A colony of bacteria lives in this tray. Each round the tray turns hostile in a new way. Pick one mutation for the microbe, then watch what happens to the colony.</p>
+    </div>
+    <ol id="history" class="history" aria-label="Results by condition"></ol>
+    <div class="scoreboard">
+      <div class="stat"><span class="lbl">Score</span><span id="score" class="val">0</span></div>
+      <div class="stat"><span class="lbl">Condition</span><span id="roundNum" class="val">1/12</span></div>
+    </div>
+  </header>
+
+  <main class="app">
+    <section class="scene" aria-label="Culture tray">
+      <div class="tray-box"><div class="tray-wrap">
+        <canvas id="tray" width="640" height="440" role="img" aria-label="Animated view of the culture tray and its microbes"></canvas>
+        <div class="tape" id="tape">COND 01</div>
+        <div class="census">Colony ≈ <b id="pop">1,000</b> cells</div>
+        <div id="stamp" class="stamp" hidden></div>
+      </div></div>
+      <ul class="key">
+        <li><span class="sw good"></span>Beneficial trait: colony thrives</li>
+        <li><span class="sw warn"></span>Neutral trait: colony holds steady</li>
+        <li><span class="sw bad"></span>Harmful trait: colony dies off</li>
+        <li>Meet the required outcome: +10. Miss it: −10.</li>
+      </ul>
+    </section>
+
+    <section class="card" id="card" aria-live="polite"></section>
+  </main>
+</div>
+
+<div id="finale" class="finale" hidden role="dialog" aria-modal="true" aria-labelledby="finale-label">
+  <div class="finale-box">
+    <p class="eyebrow">Run complete</p>
+    <p id="finale-label" class="finale-label"></p>
+    <p class="finale-score"><span id="finale-num">0</span><span class="of" id="finale-of">/ 12</span></p>
+    <p class="finale-sub">Required outcomes met</p>
+    <ul id="finale-pips" class="pips" aria-hidden="true"></ul>
+    <p id="finale-msg" class="finale-msg"></p>
+    <p id="finale-stats" class="finale-stats"></p>
+    <p id="finale-time" class="finale-time"></p>
+    <div class="finale-actions">
+      <button type="button" id="review-btn" class="btn btn-ghost">Review my answers</button>
+      <button type="button" id="again-btn" class="btn">Start a new tray</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+"use strict";
+
+/* ---------- Conditions ---------- */
+const SCEN = [
+ { id:"heat", name:"Heat Wave", reading:"55 °C", goal:"survive",
+   text:"The tray warmer is stuck on high. The water climbs to 55 °C, hot enough to make most proteins unfold and stop working.",
+   options:[
+    {trait:"Heat-stable enzymes", detail:"Proteins fold with extra bonds that hold their shape when hot.", effect:"good", look:{dots:true},
+     why:"Enzymes only work when they keep their shape. Extra bonds keep them folded, so the cells keep making energy and copying DNA in the heat."},
+    {trait:"Longer flagellum", detail:"A longer whip-like tail for swimming.", effect:"neutral", look:{tail:1, long:true},
+     why:"The whole tray is the same temperature, so there is nowhere cooler to swim. Better swimming changes nothing."},
+    {trait:"Looser cell membrane", detail:"Membrane fats become more fluid and flexible.", effect:"bad", look:{wall:"thin"},
+     why:"Heat already makes membranes runny. A looser membrane leaks, and the cell contents spill out."},
+    {trait:"Heat-shock proteins switched off", detail:"The cell stops making helper proteins that refold damaged proteins.", effect:"bad", look:{},
+     why:"Heat-shock proteins repair proteins that heat bends out of shape. Without them, damaged proteins pile up and the cells die."}
+   ]},
+ { id:"cold", name:"Cold Room", reading:"2 °C", goal:"thrive",
+   text:"The tray was moved into the cold-room refrigerator. At 2 °C, cell membranes stiffen and chemical reactions slow down.",
+   options:[
+    {trait:"Flexible membrane fats", detail:"Membrane fats have kinks that keep them from packing tightly.", effect:"good", look:{ticks:true},
+     why:"Kinked fats keep the membrane flexible in the cold, so nutrients still move in and wastes move out. The colony keeps growing."},
+    {trait:"Round shape", detail:"Cells grow as spheres instead of rods.", effect:"neutral", look:{shape:"round"},
+     why:"A cell this small is the same temperature as the water around it no matter its shape. The colony holds steady."},
+    {trait:"Red pigment", detail:"Cells produce a red-colored compound.", effect:"neutral", look:{pig:"red"},
+     why:"The refrigerator is dark and cold. Color does not warm the cell or change its membrane."},
+    {trait:"Stiffer membrane fats", detail:"Membrane fats are straight and pack tightly together.", effect:"bad", look:{wall:"thick"},
+     why:"Straight fats pack together like butter in a fridge. The membrane turns stiff and gel-like, nutrients cannot pass, and the cells starve."}
+   ]},
+ { id:"predators", name:"Amoeba Invasion", reading:"40 amoebae / mL", goal:"survive",
+   text:"Amoebae have entered the tray. Each one wraps its body around a bacterium and swallows it whole.",
+   options:[
+    {trait:"Grow in long filaments", detail:"Cells stay attached end to end after dividing.", effect:"good", look:{shape:"chain"},
+     why:"A long chain of cells is too big for an amoeba to wrap around. The predators cannot eat them, so the colony grows."},
+    {trait:"Yellow pigment", detail:"Cells produce a yellow-colored compound.", effect:"neutral", look:{pig:"yellow"},
+     why:"Amoebae find prey by touch and chemical signals, not by color. Nothing changes."},
+    {trait:"Swim toward amoeba chemicals", detail:"Cells are attracted to chemicals the amoebae release.", effect:"bad", look:{tail:2},
+     why:"The bacteria swim straight to their predators and get eaten."},
+    {trait:"Lose the slime layer", detail:"Cells stop making their slippery outer coating.", effect:"bad", look:{wall:"thin"},
+     why:"A slimy coat makes cells hard to grab. Without it, amoebae catch and swallow them easily."}
+   ]},
+ { id:"drought", name:"Drying Tray", reading:"Water: 4 mL left", goal:"survive",
+   text:"Nobody refilled the tray. The water is evaporating, and the edges are already cracking.",
+   options:[
+    {trait:"Water-holding slime", detail:"Cells coat themselves in a thick, wet slime.", effect:"good", look:{halo:true},
+     why:"The slime soaks up and holds water like a sponge. Cells inside it stay moist and keep growing while the tray dries."},
+    {trait:"Extra flagella", detail:"Three tails instead of one.", effect:"neutral", look:{tail:3},
+     why:"Swimming does not slow evaporation. The colony neither gains nor loses."},
+    {trait:"Thinner cell wall", detail:"The wall around the membrane is thinner.", effect:"bad", look:{wall:"thin"},
+     why:"A thin wall loses water faster. The cells shrivel as the tray dries."},
+    {trait:"Divide twice as fast", detail:"Cells split every 10 minutes instead of every 20.", effect:"bad", look:{},
+     why:"Dividing takes water and energy. Cells caught halfway through dividing dry out and die."}
+   ]},
+ { id:"uv", name:"Sunny Windowsill", reading:"UV index 11", goal:"thrive",
+   text:"The lid is off and the tray sits in direct sun. Ultraviolet light breaks bonds in DNA, causing damage the cells must survive.",
+   options:[
+    {trait:"Orange carotenoid pigment", detail:"Cells fill with orange pigment, like the color in carrots.", effect:"good", look:{pig:"orange"},
+     why:"Carotenoids absorb UV energy and neutralize harmful chemicals it creates. The pigment works like sunscreen, so the cells keep dividing."},
+    {trait:"Sulfur storage granules", detail:"Cells store small sulfur grains inside.", effect:"neutral", look:{dots:true},
+     why:"Stored sulfur does not block UV or repair DNA. The colony holds steady."},
+    {trait:"Extra sugar-digesting gene", detail:"Cells can break down one more kind of sugar.", effect:"neutral", look:{},
+     why:"Food is not the problem here. The extra gene neither helps nor hurts."},
+    {trait:"Swim toward bright light", detail:"Cells move toward the brightest part of the tray.", effect:"bad", look:{tail:2},
+     why:"Swimming toward the sun means more UV and more DNA damage. The colony dies off."}
+   ]},
+ { id:"acid", name:"Vinegar Spill", reading:"pH 3.0", goal:"survive",
+   text:"Vinegar spilled into the tray. Hydrogen ions flood the water and leak into the cells, where they damage proteins.",
+   options:[
+    {trait:"Extra proton pumps", detail:"More membrane pumps push hydrogen ions out of the cell.", effect:"good", look:{ticks:true},
+     why:"The pumps push hydrogen ions back out as fast as they leak in. The inside of the cell stays near neutral, and the colony grows."},
+    {trait:"Purple pigment", detail:"Cells produce a purple-colored compound.", effect:"neutral", look:{pig:"purple"},
+     why:"Color does not change how acid affects the cell. The colony holds steady."},
+    {trait:"Leakier membrane", detail:"The membrane lets more small particles through.", effect:"bad", look:{wall:"thin"},
+     why:"More hydrogen ions leak in, the inside of the cell turns acidic, and its proteins stop working."},
+    {trait:"Fewer proton pumps", detail:"The cell saves energy by making fewer pumps.", effect:"bad", look:{},
+     why:"With fewer pumps, hydrogen ions build up inside and the cells die."}
+   ]},
+ { id:"salt", name:"Saltwater Flood", reading:"Salinity 9%", goal:"thrive",
+   text:"Saltwater from another experiment spilled in. The water outside the cells is now saltier than inside, so water starts leaving the cells by osmosis.",
+   options:[
+    {trait:"Build up inner solutes", detail:"Cells make sugar-like molecules and keep them inside.", effect:"good", look:{dots:true},
+     why:"Extra dissolved molecules inside balance the salt outside. Water stops leaving, and the cells keep growing."},
+    {trait:"Longer flagellum", detail:"A longer whip-like tail for swimming.", effect:"neutral", look:{tail:1, long:true},
+     why:"The salt is everywhere in the tray, so swimming does not help. The colony holds steady."},
+    {trait:"Green pigment", detail:"Cells produce a green-colored compound.", effect:"neutral", look:{pig:"green"},
+     why:"Color has nothing to do with osmosis. Nothing changes."},
+    {trait:"More water channels", detail:"The membrane has more openings that let water pass.", effect:"bad", look:{wall:"thin"},
+     why:"More channels let water rush out even faster. The cells shrivel and die."}
+   ]},
+ { id:"lowo2", name:"Sealed Bag", reading:"O₂: 0.3%", goal:"thrive",
+   text:"The tray was sealed inside a plastic bag. The colony has used up almost all of the oxygen.",
+   options:[
+    {trait:"Switch to fermentation", detail:"Cells can make energy from sugar without oxygen.", effect:"good", look:{dots:true},
+     why:"Fermentation releases energy from sugar with no oxygen needed. The cells keep powering growth while the bag stays sealed."},
+    {trait:"Round shape", detail:"Cells grow as spheres instead of rods.", effect:"neutral", look:{shape:"round"},
+     why:"Shape does not change how a cell makes energy. The colony holds steady."},
+    {trait:"Yellow pigment", detail:"Cells produce a yellow-colored compound.", effect:"neutral", look:{pig:"yellow"},
+     why:"Color does not help a cell get energy. Nothing changes."},
+    {trait:"Faster oxygen use", detail:"Cells burn oxygen at a higher rate.", effect:"bad", look:{tail:2},
+     why:"The last of the oxygen gets used up even sooner, and then the cells cannot make energy at all."}
+   ]},
+ { id:"mold", name:"Antibiotic Mold", reading:"Inhibition zone: 18 mm", goal:"survive",
+   text:"A mold spore landed in the tray and grew a colony. The mold releases an antibiotic that spreads outward through the water.",
+   options:[
+    {trait:"Antibiotic-destroying enzyme", detail:"Cells make an enzyme that breaks the antibiotic apart.", effect:"good", look:{dots:true},
+     why:"The enzyme destroys the antibiotic before it can harm the cell. The colony keeps growing, even right next to the mold."},
+    {trait:"Extra flagella", detail:"Three tails instead of one.", effect:"neutral", look:{tail:3},
+     why:"The antibiotic spreads through the water faster than the cells can outrun it. Nothing changes."},
+    {trait:"More membrane pores", detail:"The outer membrane has more openings for nutrients.", effect:"bad", look:{wall:"thin"},
+     why:"The antibiotic enters through the same openings. More pores let more drug in."},
+    {trait:"Swim toward the mold", detail:"Cells are attracted to sugars the mold releases.", effect:"bad", look:{tail:2},
+     why:"The bacteria swim right into the area where the antibiotic is strongest."}
+   ]},
+ { id:"famine", name:"Empty Pantry", reading:"Glucose: 0.01 g/L", goal:"survive",
+   text:"The food in the tray is almost gone. Only a few sugar particles are left.",
+   options:[
+    {trait:"Store food granules", detail:"Cells packed away energy reserves while food was plentiful.", effect:"good", look:{dots:true},
+     why:"The stored reserves keep the cells alive and growing until food returns."},
+    {trait:"Red pigment", detail:"Cells produce a red-colored compound.", effect:"neutral", look:{pig:"red"},
+     why:"Color does not create food. The colony holds steady."},
+    {trait:"Divide twice as fast", detail:"Cells split every 10 minutes instead of every 20.", effect:"bad", look:{},
+     why:"More cells split the same small amount of food. Everyone runs out of energy."},
+    {trait:"Bigger cells", detail:"Each cell grows to nearly twice its normal size.", effect:"bad", look:{big:true},
+     why:"A bigger cell needs more food just to stay alive. The cells starve first."}
+   ]},
+ { id:"fresh", name:"Distilled Rinse", reading:"Salinity 0%", goal:"thrive",
+   text:"Someone rinsed the tray with distilled water. The inside of each cell is now saltier than the water, so water rushes in by osmosis.",
+   options:[
+    {trait:"Thicker cell wall", detail:"A stronger wall surrounds the membrane.", effect:"good", look:{wall:"thick"},
+     why:"The wall holds the cell's shape like the outside of a tire, so it cannot over-swell. The colony grows."},
+    {trait:"Orange pigment", detail:"Cells produce an orange-colored compound.", effect:"neutral", look:{pig:"orange"},
+     why:"Color does not stop water from moving in. The colony holds steady."},
+    {trait:"Longer flagellum", detail:"A longer whip-like tail for swimming.", effect:"neutral", look:{tail:1, long:true},
+     why:"All the water in the tray is fresh, so swimming does not help. Nothing changes."},
+    {trait:"Lose the cell wall", detail:"Cells stop building their outer wall.", effect:"bad", look:{wall:"thin", shape:"round"},
+     why:"With nothing holding them in, the cells swell with water until they burst."}
+   ]},
+ { id:"virus", name:"Phage Attack", reading:"Phage: 10⁸ / mL", goal:"survive",
+   text:"Bacteriophages, viruses that infect bacteria, are in the water. Each one docks on a protein on the cell surface and injects its DNA.",
+   options:[
+    {trait:"Changed surface protein", detail:"The docking protein on the cell surface has a new shape.", effect:"good", look:{ticks:true, tickAlt:true},
+     why:"The viruses cannot find a spot to dock, so they cannot get their DNA inside. The colony grows."},
+    {trait:"Green pigment", detail:"Cells produce a green-colored compound.", effect:"neutral", look:{pig:"green"},
+     why:"Viruses find cells by surface proteins, not color. Nothing changes."},
+    {trait:"Extra docking proteins", detail:"Cells cover their surface with more of the same protein.", effect:"bad", look:{ticks:true, dense:true},
+     why:"More docking spots mean more viruses attach and infect the cells."},
+    {trait:"DNA-cutting enzymes switched off", detail:"Cells stop making enzymes that chop up foreign DNA.", effect:"bad", look:{},
+     why:"Bacteria use these enzymes to destroy virus DNA. Without them, the viruses take over and the cells burst."}
+   ]}
+];
+const EFFECT = {good:"thrive", neutral:"maintain", bad:"die"};
+const EFFECT_LABEL = {good:"Beneficial", neutral:"Neutral", bad:"Harmful"};
+const OUT_LABEL = {thrive:"Thrived", maintain:"Held steady", die:"Died off"};
+const OUT_TEXT = {thrive:"The colony grew.", maintain:"The colony held steady.", die:"The colony died off."};
+const DEATH = {heat:"fade", cold:"shrivel", predators:"eaten", drought:"shrivel", uv:"fade", acid:"fade", salt:"shrivel", lowo2:"fade", mold:"fade", famine:"shrivel", fresh:"burst", virus:"burst"};
+const POINTS = 10;
+
+/* ---------- Helpers ---------- */
+const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+const PLAY_MS = reduce ? 1800 : 4400;
+const OUT_START = 0.42, OUT_END = 0.9;
+const rnd = (a,b) => a + Math.random()*(b-a);
+const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+const ease = t => t<.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2;
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function el(tag, cls, text){ const e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e; }
+const fmt = n => Math.round(n).toLocaleString("en-US");
+const pad = n => String(n).padStart(2,"0");
+
+/* ---------- Canvas ---------- */
+const W=640, H=440;
+const TRAY={x:12,y:12,w:616,h:416,r:28};
+const WELL={x:32,y:32,w:576,h:376,r:18};
+const cv=document.getElementById("tray"), ctx=cv.getContext("2d");
+let C={};
+function readTokens(){
+  const cs=getComputedStyle(document.documentElement), g=n=>cs.getPropertyValue(n).trim();
+  const names={bench:"--bench",rim:"--rim",rimEdge:"--rim-edge",water:"--water",waterDeep:"--water-deep",cell:"--cell",cellEdge:"--cell-edge",dot:"--cell-dot",dead:"--dead",tick:"--tick",halo:"--halo",
+    heat:"--heat",ice:"--ice",cold:"--cold",uv:"--uv",acid:"--acid",salt:"--salt",saltEdge:"--salt-edge",dim:"--dim",mold:"--mold",moldHalo:"--mold-halo",food:"--food",fresh:"--fresh",phage:"--phage",
+    amoeba:"--amoeba",amoebaEdge:"--amoeba-edge",dry:"--dry",crack:"--crack",red:"--pig-red",orange:"--pig-orange",yellow:"--pig-yellow",green:"--pig-green",purple:"--pig-purple"};
+  const out={}; for(const k in names){ const v=g(names[k]); out[k]= /^#[0-9a-f]{3,6}$/i.test(v) ? v : "#888888"; }
+  C=out;
+}
+function rgbOf(h){ h=h.slice(1); if(h.length===3) h=h.split("").map(x=>x+x).join(""); const n=parseInt(h,16); return [n>>16&255, n>>8&255, n&255]; }
+const rgba=(h,a)=>{ const [r,g,b]=rgbOf(h); return `rgba(${r},${g},${b},${a})`; };
+const mix=(h1,h2,t)=>{ const a=rgbOf(h1), b=rgbOf(h2); return `rgb(${a.map((v,i)=>Math.round(v+(b[i]-v)*t)).join(",")})`; };
+
+function resize(){
+  const r=cv.getBoundingClientRect(); const dpr=Math.min(window.devicePixelRatio||1, 2);
+  const w=Math.max(1, Math.round(r.width*dpr)), h=Math.max(1, Math.round(r.width*H/W*dpr));
+  if(cv.width!==w || cv.height!==h){ cv.width=w; cv.height=h; }
+  ctx.setTransform(cv.width/W,0,0,cv.height/H,0,0);
+}
+function rrPath(x,y,w,h,r){
+  r=Math.min(r,w/2,h/2); ctx.beginPath(); ctx.moveTo(x+r,y);
+  ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
+}
+
+/* ---------- State ---------- */
+let order=[], round=0, score=0, pop=1000, shownPop=1000, history=[];
+let phase="choose", cur=null, opts=[], choice=null, look={}, outcome=null;
+let env=null, cells=[], parts=[], divisions=[], playT=0, popFrom=0, popTo=0, time=0, regrew=false, frame=0;
+const drawnFor = p => clamp(Math.round(p/25), 3, 90);
+
+function newCell(x,y,a){ return {x, y, a: a==null ? rnd(0,Math.PI*2) : a, len:rnd(14,19), born:0, d:0, dying:false, dAt:9, style:null, popped:false, gone:false, target:null, scale:1, wob:rnd(0,6.28)}; }
+function waterRect(s){
+  if(env && env.id==="drought"){ const ix=8+s*150, iy=6+s*96; return {x:WELL.x+ix, y:WELL.y+iy, w:WELL.w-2*ix, h:WELL.h-2*iy}; }
+  return {x:WELL.x, y:WELL.y, w:WELL.w, h:WELL.h};
+}
+function randIn(r, m=14){ return {x:rnd(r.x+m, r.x+r.w-m), y:rnd(r.y+m, r.y+r.h-m)}; }
+
+function makeEnv(id){
+  const e={id, s:0.3, items:[], rings:[], bubbles:[], amoebae:[], phages:[], cracks:[], spawn:0};
+  if(id==="cold"){ for(let i=0;i<34;i++){ const side=i%4; const d=rnd(4,46); const t=Math.random();
+      const x= side===0? WELL.x+t*WELL.w : side===1? WELL.x+WELL.w-d : side===2? WELL.x+t*WELL.w : WELL.x+d;
+      const y= side===0? WELL.y+d : side===1? WELL.y+t*WELL.h : side===2? WELL.y+WELL.h-d : WELL.y+t*WELL.h;
+      e.items.push({x,y,size:rnd(6,17),rot:rnd(0,1)}); } }
+  if(id==="predators"){ for(let i=0;i<3;i++){ const p=randIn(WELL,60); e.amoebae.push({x:p.x,y:p.y,a:rnd(0,6.28),r:rnd(22,28),seed:rnd(0,10)}); } }
+  if(id==="drought"){ for(let i=0;i<46;i++){ const p=randIn(WELL,0); const pts=[[p.x,p.y]]; let a=rnd(0,6.28); for(let k=0;k<5;k++){ a+=rnd(-.9,.9); const l=rnd(8,22); const q=pts[pts.length-1]; pts.push([q[0]+Math.cos(a)*l, q[1]+Math.sin(a)*l]); } e.cracks.push(pts); } }
+  if(id==="salt"){ for(let i=0;i<80;i++){ const p=randIn(WELL,6); e.items.push({x:p.x,y:p.y,s:rnd(3,7),rot:rnd(0,1.5)}); } }
+  if(id==="mold"){ e.mold={x:WELL.x+96, y:WELL.y+86}; for(let i=0;i<90;i++) e.items.push({a:rnd(0,6.28), l:rnd(18,38)}); }
+  if(id==="famine"){ for(let i=0;i<46;i++){ const p=randIn(WELL,10); e.items.push({x:p.x,y:p.y,r:rnd(2,3.6)}); } }
+  if(id==="virus"){ for(let i=0;i<28;i++){ const p=randIn(WELL,10); e.phages.push({x:p.x,y:p.y,a:rnd(0,6.28),vx:rnd(-8,8),vy:rnd(-8,8)}); } }
+  return e;
+}
+
+/* ---------- Game flow ---------- */
+function newGame(){
+  if(typeof finale!=="undefined" && finale) finale.hidden=true;
+  order=shuffle(SCEN.slice()); round=0; score=0; pop=1000; history=[]; cells=[];
+  setupRound();
+}
+function setupRound(){
+  cur=order[round]; opts=shuffle(cur.options.slice()); phase="choose"; choice=null; outcome=null; look={}; playT=0; divisions=[];
+  regrew=false; if(pop<250){ pop=250; regrew=true; }
+  shownPop=pop;
+  env=makeEnv(cur.id); parts=[];
+  cells=cells.filter(c=>!c.dying && !c.gone);
+  const wr=waterRect(0.3);
+  cells.forEach(c=>{ c.scale=1; c.d=0; c.style=null; c.target=null; c.popped=false; c.x=clamp(c.x,wr.x+10,wr.x+wr.w-10); c.y=clamp(c.y,wr.y+10,wr.y+wr.h-10); });
+  const t=drawnFor(pop);
+  while(cells.length>t) cells.pop();
+  while(cells.length<t){ const p=randIn(wr); const c=newCell(p.x,p.y); c.born=cells.length===0?1:rnd(0,.6); cells.push(c); }
+  document.getElementById("stamp").hidden=true;
+  document.getElementById("tape").textContent=`COND ${pad(round+1)} · ${cur.reading}`;
+  renderCard(); renderHistory(); updateHud();
+}
+function choose(i){
+  if(phase!=="choose") return;
+  choice=opts[i]; look=choice.look||{}; outcome=EFFECT[choice.effect]; phase="play"; playT=0;
+  popFrom=pop;
+  popTo = outcome==="thrive" ? Math.min(4000, Math.round(pop*1.6)) : outcome==="die" ? Math.max(12, Math.round(pop*0.06)) : pop;
+  planOutcome();
+  document.querySelectorAll(".opt").forEach((b,k)=>{ b.disabled=true; b.classList.toggle("chosen",k===i); b.classList.toggle("faded",k!==i); });
+}
+function planOutcome(){
+  const live=cells.filter(c=>!c.dying && !c.gone);
+  const n=live.length;
+  const style=DEATH[cur.id]||"fade";
+  const mark=(list)=>list.forEach((c,i)=>{
+    c.dying=true; c.style=style;
+    c.dAt=OUT_START + (OUT_END-OUT_START-0.14)*(i/Math.max(1,list.length)) + Math.random()*0.05;
+    if(style==="eaten") c.target=env.amoebae[i%env.amoebae.length];
+  });
+  divisions=[];
+  if(outcome==="die"){
+    let ordered=live.slice();
+    if(cur.id==="mold") ordered.sort((a,b)=>Math.hypot(a.x-env.mold.x,a.y-env.mold.y)-Math.hypot(b.x-env.mold.x,b.y-env.mold.y));
+    else shuffle(ordered);
+    const keep=Math.min(n, drawnFor(popTo));
+    mark(ordered.slice(0, n-keep));
+  } else if(outcome==="thrive"){
+    const need=drawnFor(popTo)-n;
+    for(let i=0;i<need;i++) divisions.push(OUT_START+(OUT_END-OUT_START)*(i+Math.random())/need);
+    divisions.sort((a,b)=>a-b);
+  } else {
+    const k=Math.min(3, Math.floor(n/6));
+    mark(shuffle(live.slice()).slice(0,k));
+    for(let i=0;i<k;i++) divisions.push(OUT_START+(OUT_END-OUT_START)*(i+.5)/k);
+  }
+}
+function divide(){
+  const pool=cells.filter(c=>!c.dying && !c.gone && c.born>=0.9);
+  if(!pool.length) return;
+  const c=pool[Math.floor(Math.random()*pool.length)];
+  const dx=Math.cos(c.a)*c.len*0.55, dy=Math.sin(c.a)*c.len*0.55;
+  const ch=newCell(c.x+dx, c.y+dy, c.a+rnd(-.4,.4)); ch.born=0.25; ch.len=c.len;
+  c.x-=dx*0.4; c.y-=dy*0.4;
+  cells.push(ch);
+}
+function finishRound(){
+  phase="result"; pop=popTo; shownPop=pop;
+  const met = cur.goal==="thrive" ? outcome==="thrive" : outcome!=="die";
+  score += met ? POINTS : -POINTS;
+  history.push({name:cur.name, trait:choice.trait, effect:choice.effect, outcome, met});
+  const st=document.getElementById("stamp"); st.className="stamp "+outcome; st.textContent=OUT_LABEL[outcome]; st.hidden=false;
+  renderResult(met); renderHistory(); updateHud();
+}
+function next(){
+  round++;
+  if(round>=order.length) renderSummary(); else setupRound();
+}
+
+/* ---------- DOM ---------- */
+const card=document.getElementById("card");
+function updateHud(){
+  const s=document.getElementById("score"); s.textContent = score>0 ? "+"+score : String(score).replace("-","−");
+  s.className="val "+(score>0?"pos":score<0?"neg":"");
+  document.getElementById("roundNum").textContent=`${Math.min(round+1,order.length)}/${order.length}`;
+  document.getElementById("pop").textContent=fmt(shownPop);
+}
+function renderHistory(){
+  const ol=document.getElementById("history"); ol.textContent="";
+  order.forEach((s,i)=>{
+    const li=el("li",null,String(i+1)); const h=history[i];
+    if(h){ li.classList.add(h.outcome); li.title=`${s.name}: ${h.trait} (${OUT_LABEL[h.outcome]}, ${h.met?"+":"−"}${POINTS})`; }
+    else if(i===round && phase!=="done"){ li.classList.add("current"); li.title=s.name; }
+    ol.appendChild(li);
+  });
+}
+function renderCard(){
+  card.textContent=""; card.classList.remove("revealed"); card.scrollTop=0;
+  card.appendChild(el("p","eyebrow",`Condition ${pad(round+1)} of ${order.length}`));
+  const hr=el("div","head-row"); hr.appendChild(el("h2",null,cur.name)); hr.appendChild(el("span","reading",cur.reading)); card.appendChild(hr);
+  card.appendChild(el("p","cond-text",cur.text));
+  if(regrew) card.appendChild(el("p","note note-regrow","A few survivors from the last round regrew the colony to about 250 cells."));
+  const g=el("div","goal "+cur.goal);
+  g.appendChild(el("span","glbl","Required outcome"));
+  g.appendChild(el("strong",null,cur.goal==="thrive"?"Thrive":"Survive"));
+  g.appendChild(el("span",null,cur.goal==="thrive"?"The colony must grow.":"The colony must not die off."));
+  card.appendChild(g);
+  card.appendChild(el("h3","choose-h","Choose one mutation"));
+  const box=el("div","options");
+  opts.forEach((o,i)=>{
+    const b=el("button","opt"); b.type="button"; b.id="opt-"+i;
+    b.appendChild(el("span","letter","ABCD"[i]));
+    const body=el("span","opt-body");
+    body.appendChild(el("b",null,o.trait));
+    body.appendChild(el("span","detail",o.detail));
+    const tag=el("span","tag "+o.effect, EFFECT_LABEL[o.effect]); tag.hidden=true; body.appendChild(tag);
+    b.appendChild(body);
+    b.addEventListener("click",()=>choose(i));
+    box.appendChild(b);
+  });
+  card.appendChild(box);
+}
+function renderResult(met){
+  document.querySelectorAll(".opt .tag").forEach(t=>t.hidden=false);
+  opts.forEach((o,k)=>{ if(o.effect==="good"){ const b=document.getElementById("opt-"+k); if(b) b.classList.add("best"); } });
+  const r=el("div","result");
+  const v=el("div","verdict "+(met?"ok":"miss"));
+  v.appendChild(el("span","delta",(met?"+":"−")+POINTS));
+  const vt=el("div");
+  vt.appendChild(el("strong",null,met?"Goal met":"Goal missed"));
+  const need = cur.goal==="thrive" ? "This condition required the colony to thrive." : "This condition required the colony to survive.";
+  vt.appendChild(el("span",null, OUT_TEXT[outcome] + (met ? "" : " "+need)));
+  v.appendChild(vt); r.appendChild(v);
+  const why=el("p"); why.appendChild(el("b",null,EFFECT_LABEL[choice.effect]+" trait. ")); why.appendChild(document.createTextNode(choice.why)); r.appendChild(why);
+  if(choice.effect!=="good"){
+    const best=cur.options.find(o=>o.effect==="good");
+    const bp=el("p","note"); bp.appendChild(el("b",null,"Best adaptation: "+best.trait+". ")); bp.appendChild(document.createTextNode(best.why)); r.appendChild(bp);
+  }
+  const btn=el("button","btn", round+1>=order.length ? "See final results" : "Next condition →"); btn.type="button"; btn.id="next-btn";
+  btn.addEventListener("click",next); r.appendChild(btn);
+  card.classList.add("revealed");
+  card.appendChild(r);
+  btn.focus({preventScroll:true});
+  r.scrollIntoView({block:"nearest", behavior: reduce ? "auto" : "smooth"});
+}
+function renderSummary(){
+  phase="done"; renderHistory();
+  card.textContent=""; card.classList.remove("revealed"); card.scrollTop=0;
+  card.appendChild(el("p","eyebrow","Run complete"));
+  card.appendChild(el("h2",null,"Final score"));
+  const sc=el("div","sum-score", score>0?"+"+score:String(score).replace("-","−")); sc.style.color= score>0?"var(--good)":score<0?"var(--bad)":"var(--ink)"; card.appendChild(sc);
+  const met=history.filter(h=>h.met).length;
+  card.appendChild(el("p",null,`Required outcome met in ${met} of ${history.length} conditions. Final colony: about ${fmt(pop)} cells.`));
+  const ul=el("ul","sum-list");
+  history.forEach(h=>{
+    const li=el("li"); li.appendChild(el("span","nm",h.name));
+    li.appendChild(el("span","pts "+(h.met?"ok":"miss"),(h.met?"+":"−")+POINTS));
+    li.appendChild(el("span","tr",`${h.trait} · ${EFFECT_LABEL[h.effect]} · ${OUT_LABEL[h.outcome]}`));
+    ul.appendChild(li);
+  });
+  card.appendChild(ul);
+  const b=el("button","btn","Start a new tray"); b.type="button"; b.id="restart-btn"; b.addEventListener("click",newGame); card.appendChild(b);
+  document.getElementById("roundNum").textContent=`${order.length}/${order.length}`;
+  showFinale();
+}
+
+/* ---------- Final overlay ---------- */
+const finale=document.getElementById("finale");
+function tierFor(met,total){
+  const pct=met/total;
+  if(pct>=0.75) return {cls:"thriving", label:"Thriving!",
+    msg:"Your microbe adapted to almost every challenge in the tray. You consistently chose traits that solved the exact problem each condition caused."};
+  if(pct>=0.5) return {cls:"steady", label:"Holding steady",
+    msg:"Your colony made it through, but some mutations did not help. Review the conditions you missed and look for the trait that fixes that specific problem."};
+  return {cls:"unsuccessful", label:"Unsuccessful",
+    msg:"The colony struggled to survive. For each condition, ask what is actually harming the cells, then look for the trait that protects against it."};
+}
+function showFinale(){
+  const total=history.length, met=history.filter(h=>h.met).length, t=tierFor(met,total);
+  const lab=document.getElementById("finale-label"); lab.textContent=t.label; lab.className="finale-label "+t.cls;
+  document.getElementById("finale-num").textContent=met;
+  document.getElementById("finale-of").textContent="/ "+total;
+  const pips=document.getElementById("finale-pips"); pips.textContent="";
+  history.forEach(h=>pips.appendChild(el("li",h.met?"met":"miss")));
+  document.getElementById("finale-msg").textContent=t.msg;
+  const st=document.getElementById("finale-stats"); st.textContent="";
+  const cnt=k=>history.filter(h=>h.outcome===k).length;
+  [["Thrived",cnt("thrive")],["Held steady",cnt("maintain")],["Died off",cnt("die")],["Points",score>0?"+"+score:String(score).replace("-","−")]].forEach(([k,v])=>{
+    const s=el("span"); s.appendChild(document.createTextNode(k+" ")); s.appendChild(el("b",null,String(v))); st.appendChild(s);
+  });
+  const now=new Date();
+  document.getElementById("finale-time").textContent="Completed "+now.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})+", "+now.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"});
+  finale.hidden=false;
+  document.getElementById("again-btn").focus({preventScroll:true});
+}
+function hideFinale(){ finale.hidden=true; }
+document.getElementById("review-btn").addEventListener("click",()=>{ hideFinale(); const b=document.getElementById("restart-btn"); if(b) b.focus({preventScroll:true}); });
+document.getElementById("again-btn").addEventListener("click",()=>{ hideFinale(); newGame(); });
+document.addEventListener("keydown",e=>{
+  if(finale.hidden) return;
+  if(e.key==="Escape"){ hideFinale(); return; }
+  if(e.key==="Tab"){
+    const f=[document.getElementById("review-btn"),document.getElementById("again-btn")];
+    if(e.shiftKey && document.activeElement===f[0]){ e.preventDefault(); f[1].focus(); }
+    else if(!e.shiftKey && document.activeElement===f[1]){ e.preventDefault(); f[0].focus(); }
+  }
+});
+
+/* ---------- Simulation ---------- */
+function progress(){ return phase==="play" ? playT : (phase==="choose" ? 0 : 1); }
+function update(dt){
+  time+=dt;
+  if(phase==="play"){ playT+=dt*1000/PLAY_MS; }
+  const p=progress();
+  env.s = phase==="choose" ? 0.3 : 0.3+0.7*Math.min(1,p/OUT_START);
+  const s=env.s, wr=waterRect(s);
+
+  while(phase==="play" && divisions.length && p>=divisions[0]){ divisions.shift(); divide(); }
+
+  const slow = (phase!=="choose" && outcome==="maintain") ? 0.6 : 1;
+  for(const c of cells){
+    if(c.gone) continue;
+    if(c.born<1) c.born=Math.min(1,c.born+dt*1.6);
+    if(c.dying && p>=c.dAt && c.d<1){
+      c.d=Math.min(1, c.d+dt/(reduce?0.35:0.8));
+      if(c.style==="shrivel") c.scale=1-0.45*c.d;
+      else if(c.style==="burst"){
+        if(c.d<0.45) c.scale=1+0.55*(c.d/0.45);
+        else { if(!c.popped){ c.popped=true; burst(c); } c.scale=0.55; }
+      }
+    }
+    if(c.style==="eaten" && c.dying && p>=c.dAt){
+      const t=c.target; c.x+=(t.x-c.x)*Math.min(1,dt*3.5); c.y+=(t.y-c.y)*Math.min(1,dt*3.5);
+      if(c.d>=1){ c.gone=true; t.r=Math.min(40,t.r+0.8); }
+      continue;
+    }
+    if(c.d>=1) continue;
+    c.a += (Math.random()-.5)*3.2*dt;
+    const sp=15*slow*(1-c.d)*(reduce?0.5:1);
+    c.x+=Math.cos(c.a)*sp*dt; c.y+=Math.sin(c.a)*sp*dt;
+    const m=10;
+    if(c.x<wr.x+m){ c.x=wr.x+m; c.a=Math.PI-c.a; } else if(c.x>wr.x+wr.w-m){ c.x=wr.x+wr.w-m; c.a=Math.PI-c.a; }
+    if(c.y<wr.y+m){ c.y=wr.y+m; c.a=-c.a; } else if(c.y>wr.y+wr.h-m){ c.y=wr.y+wr.h-m; c.a=-c.a; }
+  }
+  for(const q of parts){ q.x+=q.vx*dt; q.y+=q.vy*dt; q.vx*=0.96; q.vy*=0.96; q.life-=dt; }
+  parts=parts.filter(q=>q.life>0);
+
+  for(const a of env.amoebae){
+    a.a+=(Math.random()-.5)*1.4*dt; a.x+=Math.cos(a.a)*7*dt; a.y+=Math.sin(a.a)*7*dt;
+    if(a.x<WELL.x+40||a.x>WELL.x+WELL.w-40) a.a=Math.PI-a.a;
+    if(a.y<WELL.y+40||a.y>WELL.y+WELL.h-40) a.a=-a.a;
+    a.x=clamp(a.x,WELL.x+40,WELL.x+WELL.w-40); a.y=clamp(a.y,WELL.y+40,WELL.y+WELL.h-40);
+  }
+  for(const v of env.phages){
+    v.x+=v.vx*dt; v.y+=v.vy*dt; v.a+=dt*0.6;
+    if(v.x<WELL.x+6||v.x>WELL.x+WELL.w-6) v.vx*=-1;
+    if(v.y<WELL.y+6||v.y>WELL.y+WELL.h-6) v.vy*=-1;
+  }
+  if(env.id==="acid"||env.id==="fresh"){
+    env.spawn-=dt;
+    if(env.spawn<=0){ const q=randIn(WELL,20); env.rings.push({x:q.x,y:q.y,r:2,life:1.4}); env.spawn=(env.id==="acid"?0.55:0.8)/(0.3+s); }
+  }
+  if(env.id==="lowo2"){
+    env.spawn-=dt;
+    if(env.spawn<=0 && s<0.95){ const q=randIn(WELL,10); env.bubbles.push({x:q.x,y:WELL.y+WELL.h-6,r:rnd(1.5,4),vy:rnd(-40,-24),life:rnd(2,4)}); env.spawn=0.08/Math.max(0.05,1-s); }
+    for(const b of env.bubbles){ b.y+=b.vy*dt; b.x+=Math.sin(time*3+b.r)*0.3; b.life-=dt; }
+    env.bubbles=env.bubbles.filter(b=>b.life>0 && b.y>WELL.y);
+  }
+  for(const r of env.rings){ r.r+=dt*34; r.life-=dt; }
+  env.rings=env.rings.filter(r=>r.life>0);
+
+  if(phase==="play"){
+    const t=clamp((p-OUT_START)/(OUT_END-OUT_START),0,1);
+    shownPop=popFrom+(popTo-popFrom)*ease(t);
+    document.getElementById("pop").textContent=fmt(shownPop);
+    if(playT>=1) finishRound();
+  }
+}
+function burst(c){
+  const col = look.pig ? C[look.pig] : C.cell;
+  for(let i=0;i<8;i++){ const a=rnd(0,6.28), sp=rnd(20,60); parts.push({x:c.x,y:c.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:rnd(.5,1),col,r:rnd(1,2.2)}); }
+  if(env.id==="virus") for(let i=0;i<3;i++) env.phages.push({x:c.x,y:c.y,a:rnd(0,6.28),vx:rnd(-20,20),vy:rnd(-20,20)});
+}
+
+/* ---------- Drawing ---------- */
+function draw(){
+  const s=env.s, p=progress();
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle=C.bench; ctx.fillRect(0,0,W,H);
+
+  rrPath(TRAY.x,TRAY.y,TRAY.w,TRAY.h,TRAY.r); ctx.fillStyle=C.rim; ctx.fill(); ctx.lineWidth=2; ctx.strokeStyle=C.rimEdge; ctx.stroke();
+  ctx.strokeStyle=C.rimEdge; ctx.lineWidth=1;
+  for(let i=0, x=WELL.x+8; x<WELL.x+WELL.w-6; x+=22, i++){ const l=i%5===0?8:4; ctx.beginPath(); ctx.moveTo(x,TRAY.y+TRAY.h-4); ctx.lineTo(x,TRAY.y+TRAY.h-4-l); ctx.stroke(); }
+
+  if(env.id==="heat"){ ctx.fillStyle=rgba(C.heat,0.25+0.7*s); ctx.fillRect(WELL.x+24, TRAY.y+TRAY.h-15, WELL.w-48, 4); }
+
+  ctx.save(); rrPath(WELL.x,WELL.y,WELL.w,WELL.h,WELL.r); ctx.clip();
+  const wr=waterRect(s);
+  if(env.id==="drought"){
+    ctx.fillStyle=C.dry; ctx.fillRect(WELL.x,WELL.y,WELL.w,WELL.h);
+    ctx.strokeStyle=rgba(C.crack,0.35+0.5*s); ctx.lineWidth=1.2;
+    for(const pts of env.cracks){ ctx.beginPath(); pts.forEach((q,i)=>i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1])); ctx.stroke(); }
+  }
+  const gr=ctx.createLinearGradient(0,wr.y,0,wr.y+wr.h); gr.addColorStop(0,C.water); gr.addColorStop(1,C.waterDeep);
+  rrPath(wr.x,wr.y,wr.w,wr.h, env.id==="drought"?28:WELL.r); ctx.fillStyle=gr; ctx.fill();
+
+  drawUnder(s);
+  for(const c of cells) drawCell(c,s,p);
+  for(const q of parts){ ctx.globalAlpha=clamp(q.life,0,1); ctx.fillStyle=q.col; ctx.beginPath(); ctx.arc(q.x,q.y,q.r,0,Math.PI*2); ctx.fill(); }
+  ctx.globalAlpha=1;
+  drawOver(s);
+  ctx.restore();
+
+  rrPath(WELL.x,WELL.y,WELL.w,WELL.h,WELL.r); ctx.lineWidth=1.5; ctx.strokeStyle=C.rimEdge; ctx.stroke();
+
+  if(env.id==="uv"){
+    const sx=TRAY.x+TRAY.w-26, sy=TRAY.y+26;
+    ctx.strokeStyle=rgba(C.uv,0.6+0.4*s); ctx.lineWidth=2.4;
+    for(let i=0;i<10;i++){ const a=i/10*Math.PI*2+time*0.3; ctx.beginPath(); ctx.moveTo(sx+Math.cos(a)*17,sy+Math.sin(a)*17); ctx.lineTo(sx+Math.cos(a)*(23+3*s),sy+Math.sin(a)*(23+3*s)); ctx.stroke(); }
+    ctx.fillStyle=C.uv; ctx.beginPath(); ctx.arc(sx,sy,13,0,Math.PI*2); ctx.fill();
+  }
+}
+
+function drawUnder(s){
+  const id=env.id;
+  if(id==="heat"){ ctx.fillStyle=rgba(C.heat,0.06+0.2*s); ctx.fillRect(WELL.x,WELL.y,WELL.w,WELL.h); }
+  if(id==="cold"){
+    ctx.fillStyle=rgba(C.cold,0.08+0.24*s); ctx.fillRect(WELL.x,WELL.y,WELL.w,WELL.h);
+    ctx.strokeStyle=rgba(C.ice,0.85); ctx.lineWidth=1.3;
+    for(const it of env.items){ const sz=it.size*(0.25+0.9*s); ctx.save(); ctx.translate(it.x,it.y); ctx.rotate(it.rot);
+      for(let k=0;k<3;k++){ ctx.rotate(Math.PI/3); ctx.beginPath(); ctx.moveTo(-sz,0); ctx.lineTo(sz,0);
+        ctx.moveTo(sz*.55,0); ctx.lineTo(sz*.8,-sz*.22); ctx.moveTo(sz*.55,0); ctx.lineTo(sz*.8,sz*.22);
+        ctx.moveTo(-sz*.55,0); ctx.lineTo(-sz*.8,-sz*.22); ctx.moveTo(-sz*.55,0); ctx.lineTo(-sz*.8,sz*.22); ctx.stroke(); }
+      ctx.restore(); }
+  }
+  if(id==="acid"){
+    ctx.fillStyle=rgba(C.acid,0.06+0.2*s); ctx.fillRect(WELL.x,WELL.y,WELL.w,WELL.h);
+    for(const r of env.rings){ ctx.strokeStyle=rgba(C.acid,clamp(r.life/1.4,0,1)*0.9); ctx.lineWidth=2; ctx.beginPath(); ctx.arc(r.x,r.y,r.r,0,Math.PI*2); ctx.stroke(); }
+  }
+  if(id==="fresh"){
+    ctx.fillStyle=rgba(C.fresh,0.05+0.18*s); ctx.fillRect(WELL.x,WELL.y,WELL.w,WELL.h);
+    for(const r of env.rings){ ctx.strokeStyle=rgba(C.fresh,clamp(r.life/1.4,0,1)*0.8); ctx.lineWidth=1.5; ctx.beginPath(); ctx.arc(r.x,r.y,r.r,0,Math.PI*2); ctx.stroke(); }
+  }
+  if(id==="salt"){
+    const n=Math.round(env.items.length*clamp(0.1+s,0,1));
+    for(let i=0;i<n;i++){ const it=env.items[i]; ctx.save(); ctx.translate(it.x,it.y); ctx.rotate(it.rot); ctx.fillStyle=C.salt; ctx.strokeStyle=C.saltEdge; ctx.lineWidth=1; ctx.fillRect(-it.s/2,-it.s/2,it.s,it.s); ctx.strokeRect(-it.s/2,-it.s/2,it.s,it.s); ctx.restore(); }
+  }
+  if(id==="mold"){
+    const m=env.mold, R=30+s*190;
+    ctx.fillStyle=rgba(C.moldHalo,0.35); ctx.beginPath(); ctx.arc(m.x,m.y,R,0,Math.PI*2); ctx.fill();
+    ctx.setLineDash([5,5]); ctx.strokeStyle=rgba(C.mold,0.8); ctx.lineWidth=1.5; ctx.beginPath(); ctx.arc(m.x,m.y,R,0,Math.PI*2); ctx.stroke(); ctx.setLineDash([]);
+    ctx.strokeStyle=rgba(C.mold,0.75); ctx.lineWidth=1;
+    for(const h of env.items){ ctx.beginPath(); ctx.moveTo(m.x+Math.cos(h.a)*14,m.y+Math.sin(h.a)*14); ctx.lineTo(m.x+Math.cos(h.a+.05)*h.l,m.y+Math.sin(h.a+.05)*h.l); ctx.stroke(); }
+    ctx.fillStyle=C.mold; ctx.beginPath(); ctx.arc(m.x,m.y,20,0,Math.PI*2); ctx.fill();
+  }
+  if(id==="famine"){
+    const n=Math.max(3, Math.round(env.items.length*(1-0.92*s)));
+    ctx.fillStyle=C.food;
+    for(let i=0;i<n;i++){ const it=env.items[i]; ctx.beginPath(); ctx.arc(it.x,it.y,it.r,0,Math.PI*2); ctx.fill(); }
+  }
+}
+function drawOver(s){
+  const id=env.id;
+  if(id==="heat"){
+    ctx.strokeStyle=rgba(C.heat,0.12+0.35*s); ctx.lineWidth=1.6;
+    for(let i=0;i<8;i++){ const x0=WELL.x+(i+.5)*WELL.w/8; ctx.beginPath();
+      for(let y=WELL.y+WELL.h; y>WELL.y; y-=8){ const x=x0+Math.sin(y*0.045+time*3+i)*7; y===WELL.y+WELL.h?ctx.moveTo(x,y):ctx.lineTo(x,y); } ctx.stroke(); }
+  }
+  if(id==="predators"){
+    for(const a of env.amoebae){
+      ctx.beginPath();
+      for(let k=0;k<=28;k++){ const th=k/28*Math.PI*2; const rr=a.r*(1+0.14*Math.sin(th*3+time*1.3+a.seed)+0.07*Math.sin(th*5-time*2+a.seed));
+        const x=a.x+Math.cos(th)*rr, y=a.y+Math.sin(th)*rr; k?ctx.lineTo(x,y):ctx.moveTo(x,y); }
+      ctx.closePath(); ctx.fillStyle=rgba(C.amoeba,0.55); ctx.fill(); ctx.strokeStyle=C.amoebaEdge; ctx.lineWidth=1.5; ctx.stroke();
+      ctx.fillStyle=rgba(C.amoebaEdge,0.55); ctx.beginPath(); ctx.arc(a.x+a.r*.15,a.y-a.r*.1,a.r*.27,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle=rgba(C.amoebaEdge,0.3); for(let k=0;k<3;k++){ ctx.beginPath(); ctx.arc(a.x-a.r*.35+k*6,a.y+a.r*.35,2.4,0,Math.PI*2); ctx.fill(); }
+    }
+  }
+  if(id==="uv"){
+    ctx.save(); ctx.translate(WELL.x+WELL.w, WELL.y); ctx.rotate(0.62);
+    for(let i=0;i<6;i++){ ctx.fillStyle=rgba(C.uv,(0.06+0.16*s)*(0.75+0.25*Math.sin(time*2+i))); ctx.fillRect(-60+i*-110, -40, 44, 900); }
+    ctx.restore();
+  }
+  if(id==="lowo2"){
+    ctx.strokeStyle=rgba(C.fresh,0.7); ctx.lineWidth=1;
+    for(const b of env.bubbles){ ctx.beginPath(); ctx.arc(b.x,b.y,b.r,0,Math.PI*2); ctx.stroke(); }
+    ctx.fillStyle=rgba(C.dim,0.05+0.32*s); ctx.fillRect(WELL.x,WELL.y,WELL.w,WELL.h);
+    ctx.fillStyle=rgba(C.fresh,0.08); ctx.save(); ctx.translate(WELL.x,WELL.y); ctx.rotate(-0.5); ctx.fillRect(-100,120,900,26); ctx.fillRect(-100,240,900,10); ctx.restore();
+  }
+  if(id==="virus"){
+    ctx.strokeStyle=C.phage; ctx.fillStyle=C.phage; ctx.lineWidth=1;
+    for(const v of env.phages){ ctx.save(); ctx.translate(v.x,v.y); ctx.rotate(v.a);
+      ctx.beginPath(); for(let k=0;k<6;k++){ const a=k/6*Math.PI*2; k?ctx.lineTo(Math.cos(a)*3.4,-6+Math.sin(a)*3.4):ctx.moveTo(Math.cos(a)*3.4,-6+Math.sin(a)*3.4); } ctx.closePath(); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(0,-3); ctx.lineTo(0,3); ctx.moveTo(0,3); ctx.lineTo(-3,6); ctx.moveTo(0,3); ctx.lineTo(3,6); ctx.moveTo(0,3); ctx.lineTo(0,6.5); ctx.stroke();
+      ctx.restore(); }
+  }
+}
+
+function bodyPath(shape, ox, len, wd){
+  if(shape==="round"){ ctx.beginPath(); ctx.arc(ox,0,6.4,0,Math.PI*2); }
+  else rrPath(ox-len/2,-wd/2,len,wd,wd/2);
+}
+function drawCell(c, s, p){
+  if(c.gone) return;
+  const lk = phase==="choose" ? {} : look;
+  const shape=lk.shape||"rod";
+  let sc=(c.scale||1)*(lk.big?1.35:1)*(0.55+0.45*Math.min(1,c.born));
+  const pre=Math.min(1,p/OUT_START);
+  if(env.id==="fresh" && phase!=="choose" && outcome!=="thrive" && !c.dying) sc*=1+0.14*pre;
+  if(env.id==="salt" && phase!=="choose" && outcome!=="thrive" && !c.dying) sc*=1-0.1*pre;
+  const dd=c.dying?c.d:0;
+  const base=lk.pig?C[lk.pig]:C.cell;
+  const fill= dd>0 ? mix(base,C.dead,Math.min(1,dd*1.25)) : base;
+  const edge= dd>0 ? mix(C.cellEdge,C.dead,Math.min(1,dd*1.25)) : C.cellEdge;
+  ctx.save();
+  ctx.globalAlpha=Math.min(1,c.born*1.4)*(dd>=1?0.32:1);
+  ctx.translate(c.x,c.y); ctx.rotate(c.a); ctx.scale(sc,sc);
+  const L=c.len, Wd=7.6;
+  const segs= shape==="chain" ? [-L*0.9,0,L*0.9] : [0];
+  const segL= shape==="chain" ? L*0.84 : L;
+
+  if(lk.tail && dd<1){
+    ctx.strokeStyle=edge; ctx.lineWidth=1.1;
+    const startX= shape==="round" ? -6.4 : segs[0]-segL/2;
+    const len=lk.long?28:17;
+    for(let k=0;k<lk.tail;k++){
+      const off=(k-(lk.tail-1)/2)*2.4; ctx.beginPath();
+      for(let u=0;u<=len;u+=2){ const x=startX-u, y=off+Math.sin(u*0.45-time*10+c.wob+k)*2.4*(u/len); u?ctx.lineTo(x,y):ctx.moveTo(x,y); }
+      ctx.stroke();
+    }
+  }
+  for(const ox of segs){
+    if(lk.halo){ bodyPath(shape,ox,segL,Wd); ctx.lineWidth=9; ctx.strokeStyle=rgba(C.halo,0.4); ctx.stroke(); }
+    bodyPath(shape,ox,segL,Wd);
+    ctx.fillStyle=fill; ctx.fill();
+    ctx.strokeStyle=edge;
+    if(lk.wall==="thick"){ ctx.lineWidth=2.8; }
+    else if(lk.wall==="thin"){ ctx.lineWidth=1; ctx.setLineDash([2,2.2]); }
+    else ctx.lineWidth=1.4;
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+  if(lk.dots){
+    ctx.fillStyle=C.dot;
+    const pts= shape==="round" ? [[-2,-1.5],[2,1.5]] : [[-segL*.25,0],[0,0],[segL*.25,0]];
+    for(const q of pts){ ctx.beginPath(); ctx.arc(q[0],q[1],1.5,0,Math.PI*2); ctx.fill(); }
+  }
+  if(lk.ticks){
+    ctx.strokeStyle= lk.tickAlt ? C.orange : C.tick; ctx.lineWidth=1.1;
+    const step= lk.dense ? 2.2 : 3.6;
+    ctx.beginPath();
+    if(shape==="round"){ for(let a=0;a<Math.PI*2;a+=step/6.4){ ctx.moveTo(Math.cos(a)*6.4,Math.sin(a)*6.4); ctx.lineTo(Math.cos(a)*8.6,Math.sin(a)*8.6); } }
+    else { for(let x=-segL/2+3; x<=segL/2-3; x+=step){ ctx.moveTo(x,-Wd/2); ctx.lineTo(x,-Wd/2-2.3); ctx.moveTo(x,Wd/2); ctx.lineTo(x,Wd/2+2.3); } }
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+/* ---------- Loop ---------- */
+let last=performance.now();
+function loop(now){
+  const dt=Math.min(0.05,(now-last)/1000); last=now;
+  if(frame++%30===0) readTokens();
+  update(dt); draw();
+  requestAnimationFrame(loop);
+}
+window.addEventListener("resize", resize);
+if(window.ResizeObserver) new ResizeObserver(resize).observe(cv);
+
+readTokens(); resize(); newGame(); draw();
+requestAnimationFrame(loop);
+})();
+</script>
+
+</body></html>
